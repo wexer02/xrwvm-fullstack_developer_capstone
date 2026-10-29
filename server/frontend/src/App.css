@@ -1,38 +1,17 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+body { margin: 0; color: #24323b; background: #fff; font-family: Arial, sans-serif; }
+.site-nav { display: flex; flex-wrap: wrap; align-items: center; gap: 24px; padding: 22px 30px; background: darkturquoise; }
+.site-nav a { color: #102c35; text-decoration: none; }
+.site-nav .brand { font-size: 25px; font-weight: 700; margin-right: 20px; }
+.account { margin-left: auto; display: flex; align-items: center; gap: 20px; }
+main { max-width: 1160px; margin: 28px auto; padding: 0 20px; }
+h1 { font-size: 30px; margin-bottom: 12px; } h2 { font-size: 23px; margin: 28px 0 16px; }
+button, .btn-primary { background: #075e70; color: white; border: 0; border-radius: 4px; padding: 9px 16px; cursor: pointer; }
+button:disabled { opacity: .6; cursor: wait; } input, select, textarea { padding: 8px; border: 1px solid #8b9aa3; border-radius: 3px; }
+.form-page { max-width: 680px; } form { display: grid; gap: 10px; } form button { margin-top: 8px; justify-self: start; }
+.table-wrap { overflow-x: auto; } td, th { padding: 12px !important; vertical-align: middle; } th { white-space: nowrap; }
+.reviews { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+.review { border: 1px solid #c8d2d8; padding: 18px; } .review p:last-child { margin-bottom: 0; }
+.sentiment { display: inline-block; padding: 3px 10px; margin-bottom: 12px; text-transform: capitalize; background: #edf0f2; }
+.positive { color: #176133; background: #e6f3eb; } .negative { color: #8e2727; background: #f9eaea; }
+[role="alert"] { color: #a02020; } a { color: #075e70; } :focus-visible { outline: 3px solid #d98000; outline-offset: 2px; }
+@media (max-width: 650px) { .site-nav { padding: 16px; gap: 16px; } .account { margin-left: 0; } .site-nav .brand { width: 100%; } main { padding: 0 14px; } }

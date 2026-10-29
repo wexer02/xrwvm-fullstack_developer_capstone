@@ -1,35 +1,21 @@
-from flask import Flask
+"""Sentiment microservice using the course's bundled VADER lexicon."""
+from pathlib import Path
+import nltk
+from flask import Flask, jsonify
 from nltk.sentiment import SentimentIntensityAnalyzer
-import json
-app = Flask("Sentiment Analyzer")
 
-sia = SentimentIntensityAnalyzer()
+app = Flask(__name__)
+nltk.data.path.insert(0, str(Path(__file__).parent))
+analyzer = SentimentIntensityAnalyzer(lexicon_file='sentiment/vader_lexicon.zip/vader_lexicon/vader_lexicon.txt')
 
 
 @app.get('/')
 def home():
-    return "Welcome to the Sentiment Analyzer. \
-    Use /analyze/text to get the sentiment"
+    return jsonify(service='Sentiment Analyzer', status='ready')
 
 
-@app.get('/analyze/<input_txt>')
-def analyze_sentiment(input_txt):
-
-    scores = sia.polarity_scores(input_txt)
-    print(scores)
-    pos = float(scores['pos'])
-    neg = float(scores['neg'])
-    neu = float(scores['neu'])
-    res = "positive"
-    print("pos neg nue ", pos, neg, neu)
-    if (neg > pos and neg > neu):
-        res = "negative"
-    elif (neu > neg and neu > pos):
-        res = "neutral"
-    res = json.dumps({"sentiment": res})
-    print(res)
-    return res
-
-
-if __name__ == "__main__":
-    app.run(debug=True)
+@app.get('/analyze/<path:text>')
+def analyze_sentiment(text):
+    score = analyzer.polarity_scores(text)['compound']
+    sentiment = 'positive' if score >= 0.05 else 'negative' if score <= -0.05 else 'neutral'
+    return jsonify(sentiment=sentiment)

@@ -103,6 +103,12 @@ celerybeat.pid
 
 # Environments
 .env
+.env.*
+node_modules/
+frontend/build/
+task_plan.md
+progress.md
+findings.md
 .venv
 env/
 venv/

@@ -1,0 +1,50 @@
+name: Cars Dealership CI
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    env:
+      DJANGO_DEBUG: 'true'
+      DJANGO_SECRET_KEY: ci-test-key-not-for-deployment
+      INTERNAL_API_KEY: ci-test-internal-key
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install dependencies
+        run: |
+          pip install -r server/requirements.txt
+          npm ci --prefix server/frontend
+          npm ci --prefix server/database
+      - name: Build React and check JavaScript
+        run: |
+          npm run build --prefix server/frontend
+          node --check server/database/app.js
+      - name: Run Django checks and tests
+        working-directory: server
+        run: |
+          python manage.py check
+          python manage.py test djangoapp --verbosity 2
+      - name: Build deployment image
+        run: docker build -t cars-capstone:test ./server
+      - name: Start complete application
+        run: docker run -d --name capstone-ci -p 127.0.0.1:8001:8000 -e DJANGO_DEBUG=true cars-capstone:test
+      - name: Verify real microservices and review round-trip
+        env:
+          APP_URL: http://127.0.0.1:8001
+        run: python server/integration_check.py
+      - name: Show application logs
+        if: always()
+        run: docker logs capstone-ci || true
+      - name: Stop test application
+        if: always()
+        run: docker rm -f capstone-ci || true

@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cars-dealership
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cars-dealership
+  template:
+    metadata:
+      labels:
+        app: cars-dealership
+    spec:
+      containers:
+        - name: cars-dealership
+          image: us.icr.io/sn-labs-shubhankarp1/cars-dealership:v1
+          ports:
+            - containerPort: 8000
+          resources:
+            requests:
+              cpu: 500m
+              memory: 1Gi
+            limits:
+              cpu: '1'
+              memory: 2Gi
+          readinessProbe:
+            httpGet:
+              path: /djangoapp/get_cars
+              port: 8000
+            initialDelaySeconds: 15
+            periodSeconds: 5
