@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: cars-dealership
-          image: us.icr.io/sn-labs-shubhankarp1/cars-dealership:v1
+          image: us.icr.io/sn-labs-shubhankarp1/cars-dealership:v2
           ports:
             - containerPort: 8000
           resources:
