@@ -10,7 +10,8 @@ session = requests.Session()
 
 def post(path, data):
     token = session.get(base + '/djangoapp/csrf', timeout=20).json()['csrfToken']
-    return session.post(base + '/djangoapp/' + path, json=data, headers={'X-CSRFToken': token}, timeout=20)
+    return session.post(base + '/djangoapp/' + path, json=data,
+                        headers={'X-CSRFToken': token, 'Referer': base + '/'}, timeout=20)
 
 
 for attempt in range(60):
