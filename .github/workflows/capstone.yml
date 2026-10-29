@@ -1,5 +1,8 @@
 name: Cars Dealership CI
 on: [push, pull_request, workflow_dispatch]
+concurrency:
+  group: capstone-${{ github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:

@@ -15,3 +15,7 @@ button:disabled { opacity: .6; cursor: wait; } input, select, textarea { padding
 .positive { color: #176133; background: #e6f3eb; } .negative { color: #8e2727; background: #f9eaea; }
 [role="alert"] { color: #a02020; } a { color: #075e70; } :focus-visible { outline: 3px solid #d98000; outline-offset: 2px; }
 @media (max-width: 650px) { .site-nav { padding: 16px; gap: 16px; } .account { margin-left: 0; } .site-nav .brand { width: 100%; } main { padding: 0 14px; } }
+@media (max-width: 800px) {
+  .table th:nth-child(4), .table td:nth-child(4),
+  .table th:nth-child(5), .table td:nth-child(5) { display: none; }
+}
