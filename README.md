@@ -1,4 +1,6 @@
-# Cars Dealership — Full Stack Development Capstone
+# fullstack_developer_capstone
+
+Cars Dealership - Full Stack Development Capstone
 
 Deployed application: https://cars-dealership.2gigbvkbdmwi.us-south.codeengine.appdomain.cloud/
 

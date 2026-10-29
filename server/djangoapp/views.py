@@ -11,7 +11,7 @@ from django.core.validators import validate_email
 from django.db import IntegrityError
 from django.http import JsonResponse
 from django.middleware.csrf import get_token
-from django.views.decorators.http import require_GET, require_POST
+from django.views.decorators.http import require_GET, require_POST, require_http_methods
 from .models import CarMake, CarModel
 from .restapis import analyze_review_sentiments, get_request, post_review
 
@@ -52,10 +52,10 @@ def login_user(request):
     return JsonResponse({'userName': user.username, 'status': 'Authenticated'})
 
 
-@require_POST
+@require_http_methods(['GET', 'POST'])
 def logout_request(request):
     logout(request)
-    return JsonResponse({'status': 200, 'message': 'Logged out successfully'})
+    return JsonResponse({'userName': ''})
 
 
 @require_POST

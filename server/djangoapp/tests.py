@@ -19,6 +19,11 @@ class DealershipTests(TestCase):
         self.assertEqual(self.post('logout', {}).status_code, 200)
         self.assertFalse(self.client.get('/djangoapp/session').json()['authenticated'])
 
+    def test_course_get_logout_clears_session(self):
+        self.client.force_login(self.user)
+        self.assertEqual(self.client.get('/djangoapp/logout').json(), {'userName': ''})
+        self.assertFalse(self.client.get('/djangoapp/session').json()['authenticated'])
+
     def test_post_requires_csrf(self):
         client = Client(enforce_csrf_checks=True)
         response = client.post('/djangoapp/login', '{}', content_type='application/json')
